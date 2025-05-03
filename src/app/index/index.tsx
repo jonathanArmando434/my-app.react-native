@@ -1,12 +1,22 @@
 import React from 'react';
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './index'
+import { MaterialIcons } from '@expo/vector-icons';
+import { colors } from '../../styles/colors';
+import { Category } from '../../components/category'
 
 export default function Index () {
     return (
         <View style={styles.container}>
-            <Text style={styles.title} >Hello World!</Text>
-            <Text style={styles.title}>Jonathan-Armando</Text>
+            <View style={styles.header}>
+                <Text style={styles.logo}>M</Text>
+
+                <TouchableOpacity activeOpacity={0.5}>
+                    <MaterialIcons name='add' size={32} color={colors.green[300]} />
+                </TouchableOpacity>
+            </View>
+
+            <Category />
         </View>
     )
 }
