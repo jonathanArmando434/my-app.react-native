@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { styles } from './index'
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
-import { Category } from '../../components/category'
+import { Categories } from '../../components/categories'
+import { Link } from '../../components/link';
 
 export default function Index () {
     return (
@@ -16,9 +17,34 @@ export default function Index () {
                 </TouchableOpacity>
             </View>
 
-            <Category name="Projecto" icon='code' isSelected />
-            <Category name="Site" icon='language' isSelected={false} />
-            <Category name="Video" icon='movie' isSelected={false} />
+            <Categories />
+
+            <FlatList
+                data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
+                keyExtractor={(item) => item}
+                renderItem={({ item }) => (
+                    <Link name='Youtube' url='https://www.youtube.com' onDetails={() => console.log('Clicou...')} />
+                )}
+                showsVerticalScrollIndicator={false}
+                style={styles.links}
+                contentContainerStyle={styles.linksContent}
+            />
+
+            <Modal transparent>
+                <View style={styles.modal}>
+                    <View style={styles.modalContent}>
+                        <View style={styles.modalHeader}>
+                            <Text style={styles.modelCategory}>Curso</Text>
+                            <TouchableOpacity>
+                                <MaterialIcons name='close' size={20} color={colors.gray[400]}/>
+                            </TouchableOpacity>
+                        </View>
+
+                        <Text style={styles.modelLinkName}>Youtube</Text>
+                        <Text style={styles.modelUrl}>https://www.youtube.com</Text>
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }
