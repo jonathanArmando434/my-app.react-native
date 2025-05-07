@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { styles } from './index'
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import { Categories } from '../../components/categories'
 import { Link } from '../../components/link';
-import { Option } from '../../components/option';
+import { Option } from '../../components/option'
+import { router } from 'expo-router'
+import { categories } from '../../utils/categories'
 
 export default function Index () {
+    const [category, setCategory] = useState(categories[0].name)
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.logo}>M</Text>
 
-                <TouchableOpacity activeOpacity={0.5}>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => router.navigate('/add')}>
                     <MaterialIcons name='add' size={32} color={colors.green[300]} />
                 </TouchableOpacity>
             </View>
 
-            <Categories />
+            <Categories selected={category} onSelected={setCategory} />
 
             <FlatList
                 data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
@@ -30,8 +34,8 @@ export default function Index () {
                 style={styles.links}
                 contentContainerStyle={styles.linksContent}
             />
-
-            <Modal transparent>
+            
+            <Modal transparent visible={false}>  
                 <View style={styles.modal}>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeader}>
