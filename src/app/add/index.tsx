@@ -15,9 +15,9 @@ export default function Add(){
 
     const handleAdd = () => {
         if(!category) return Alert.alert('Categoria', 'Seleciona uma categoria')
-        if(!name.trim) return Alert.alert('Nome', 'O nome é obrigaório')
-        if(!url.trim) return Alert.alert('URL', 'A URL é obrigatória')
-            
+        if(!name) return Alert.alert('Nome', 'O nome é obrigaório')
+        if(!url) return Alert.alert('URL', 'A URL é obrigatória')
+
         console.log({
             category,
             name,
@@ -40,8 +40,8 @@ export default function Add(){
             <Categories selected={category} onSelected={setCategory} />
 
             <View style={styles.form}>
-                <Input placeholder="Name" onChangeText={setName} />
-                <Input placeholder="URL" onChangeText={setUrl} />
+                <Input placeholder="Name" onChangeText={(value) => setName(value.trim())} />
+                <Input placeholder="URL" onChangeText={(value) => setUrl(value.trim())} />
                 <Button title="Adicionar" onPress={handleAdd} />
             </View>
         </View>
