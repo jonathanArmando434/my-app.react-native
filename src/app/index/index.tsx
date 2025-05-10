@@ -26,6 +26,10 @@ export default function Index () {
         }
     }
 
+    const openModel = (link: LinkType) => {
+        
+    }
+
     useFocusEffect(useCallback(() => {
         handleGetLinks()
     }, [category]))
