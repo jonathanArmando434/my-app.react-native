@@ -9,7 +9,7 @@ export type Link = {
     category: string
 }
 
-const get = async  () => {
+const get = async  (): Promise<Link[]> => {
     const links = await AsyncStorage.getItem(linksStorageKey)
     const linksParsed = links ? JSON.parse(links) : []
     return linksParsed
@@ -26,4 +26,15 @@ const save = async (link: Link) => {
     }
 }
 
-export const linkStorage = {get, save}
+const remove = async (id: string) => {
+    try {
+        const links = await get()
+        const linksUpdated = links.filter(link => id !== link.id) 
+        const linksStringfied = JSON.stringify(linksUpdated)
+        await AsyncStorage.setItem(linksStorageKey, linksStringfied)
+    } catch (error) {
+        throw error
+    }
+}
+
+export const linkStorage = {get, save, remove}

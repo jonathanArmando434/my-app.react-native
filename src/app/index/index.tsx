@@ -16,7 +16,7 @@ export default function Index () {
     const [link, setLink] = useState<LinkType>({} as LinkType)
     const [showModel, setShowModel] = useState(false)
 
-    const handleGetLinks = async () => {
+    const getLinks = async () => {
         try {
             const links = await linkStorage.get()
             const linksFiltered = links.filter(link => link.category === category)
@@ -27,13 +27,13 @@ export default function Index () {
         }
     }
 
-    const openModel = (link: LinkType) => {
+    const handleDetails = (link: LinkType) => {
         setShowModel(true)
         setLink(link)
     }
 
     useFocusEffect(useCallback(() => {
-        handleGetLinks()
+        getLinks()
     }, [category]))
 
     return (
@@ -52,7 +52,7 @@ export default function Index () {
                 data={links}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <Link name={item.name} url={item.url} onDetails={() => openModel(item)} />
+                    <Link name={item.name} url={item.url} onDetails={() => handleDetails(item)} />
                 )}
                 showsVerticalScrollIndicator={false}
                 style={styles.links}
