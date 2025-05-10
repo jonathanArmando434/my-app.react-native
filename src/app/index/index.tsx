@@ -73,8 +73,26 @@ export default function Index () {
                         <Text style={styles.modelUrl}>{link.url}</Text>
 
                         <View style={styles.modalFooter}>
-                            <Option name={'Excluir'} icon='delete' variant='secondary' />
-                            <Option name={'Abrir'} icon='open-in-new' />
+                            <Option 
+                                name={'Excluir'} 
+                                icon='delete' 
+                                variant='secondary' 
+                                onPress={() => {
+                                    Alert.alert('Excluir', 'Tem certeza que deseja excluir este link?', [
+                                        {text: 'Não', style: 'cancel'},
+                                        {text: 'Sim', onPress: async () => {
+                                            await linkStorage.remove(link.id)
+                                            await getLinks()
+                                            setShowModel(false)
+
+                                        }}
+                                    ])
+                                }} 
+                            />
+                            <Option 
+                                name={'Abrir'} 
+                                icon='open-in-new' 
+                            />
                         </View>
                     </View>
                 </View>
