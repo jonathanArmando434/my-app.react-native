@@ -14,6 +14,7 @@ export default function Index () {
     const [category, setCategory] = useState(categories[0].name)
     const [links, setLinks] = useState<LinkType[]>([])
     const [link, setLink] = useState<LinkType>({} as LinkType)
+    const [showModel, setShowModel] = useState(false)
 
     const handleGetLinks = async () => {
         try {
