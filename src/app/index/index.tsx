@@ -52,25 +52,25 @@ export default function Index () {
                 data={links}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <Link name={item.name} url={item.url} onDetails={() => console.log('Clicou...')} />
+                    <Link name={item.name} url={item.url} onDetails={() => openModel(item)} />
                 )}
                 showsVerticalScrollIndicator={false}
                 style={styles.links}
                 contentContainerStyle={styles.linksContent}
             />
             
-            <Modal transparent visible={false}>  
+            <Modal transparent visible={false} animationType='slide'>  
                 <View style={styles.modal}>
                     <View style={styles.modalContent}>
                         <View style={styles.modalHeader}>
                             <Text style={styles.modelCategory}>Curso</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => setShowModel(false)}>
                                 <MaterialIcons name='close' size={20} color={colors.gray[400]}/>
                             </TouchableOpacity>
                         </View>
 
-                        <Text style={styles.modelLinkName}>Youtube</Text>
-                        <Text style={styles.modelUrl}>https://www.youtube.com</Text>
+                        <Text style={styles.modelLinkName}>{link.name}</Text>
+                        <Text style={styles.modelUrl}>{link.url}</Text>
 
                         <View style={styles.modalFooter}>
                             <Option name={'Excluir'} icon='delete' variant='secondary' />
