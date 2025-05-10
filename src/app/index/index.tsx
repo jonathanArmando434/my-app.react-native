@@ -28,7 +28,8 @@ export default function Index () {
     }
 
     const openModel = (link: LinkType) => {
-        
+        setShowModel(true)
+        setLink(link)
     }
 
     useFocusEffect(useCallback(() => {
