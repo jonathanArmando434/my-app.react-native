@@ -13,6 +13,7 @@ import { Link as LinkType, linkStorage } from '../../storage/link-storage'
 export default function Index () {
     const [category, setCategory] = useState(categories[0].name)
     const [links, setLinks] = useState<LinkType[]>([])
+    const [link, setLink] = useState<LinkType>({} as LinkType)
 
     const handleGetLinks = async () => {
         try {
