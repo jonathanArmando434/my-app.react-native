@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, Modal, Alert } from 'react-native';
 import { styles } from './index'
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import { Categories } from '../../components/categories'
 import { Link } from '../../components/link';
 import { Option } from '../../components/option'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 import { categories } from '../../utils/categories'
+import { Link as LinkType, linkStorage } from '../../storage/link-storage'
 
 export default function Index () {
     const [category, setCategory] = useState(categories[0].name)
+    const [links, setLinks] = useState<LinkType[]>([])
+
+    const handleGetLinks = async () => {
+        try {
+            const links = await linkStorage.get()
+            const linksFiltered = links.filter(link => link.category === category)
+            setLinks(linksFiltered)
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Error', 'Não foi possível carregar os links')
+        }
+    }
+
+    useFocusEffect(useCallback(() => {
+        handleGetLinks()
+    }, [category]))
 
     return (
         <View style={styles.container}>
@@ -25,10 +42,10 @@ export default function Index () {
             <Categories selected={category} onSelected={setCategory} />
 
             <FlatList
-                data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
-                keyExtractor={(item) => item}
+                data={links}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <Link name='Youtube' url='https://www.youtube.com' onDetails={() => console.log('Clicou...')} />
+                    <Link name={item.name} url={item.url} onDetails={() => console.log('Clicou...')} />
                 )}
                 showsVerticalScrollIndicator={false}
                 style={styles.links}
